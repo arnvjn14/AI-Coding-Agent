@@ -3,6 +3,7 @@ import sys
 from google import genai
 from dotenv import load_dotenv
 from google.genai import types
+from functions.get_files_info import get_files_info
 
 
 def main():
@@ -17,6 +18,12 @@ def main():
     if len(sys.argv) < 2:
         print("Please provide a prompt as a command-line argument.")
         sys.exit(1)
+    
+    verbose_flag = False
+    
+    if len(sys.argv) == 3 and sys.argv[2] == "--verbose":
+        verbose_flag=True
+    
 
     user_prompt = sys.argv[1]
 
@@ -34,9 +41,13 @@ def main():
         print("No response or usage metadata found.")
         return
     
-    print("Prompt Tokens:", response.usage_metadata.prompt_token_count)
-    print("Completion Tokens:", response.usage_metadata.candidates_token_count)
+    if verbose_flag:
+            print("User Prompt:", user_prompt)
+            print("Prompt Tokens:", response.usage_metadata.prompt_token_count)
+            print("Response Tokens:", response.usage_metadata.candidates_token_count)
+    
 
-main()
+print(get_files_info("calculator"))
+# main()
     
 

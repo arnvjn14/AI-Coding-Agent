@@ -4,9 +4,14 @@ def get_files_info(working_directory, directory=None):
 
     abs_working_directory = os.path.abspath(working_directory)
 
+    abs_directory=""
+
     if directory is None:
         directory = working_directory
-    abs_directory = os.path.abspath(directory)
+        abs_directory = os.path.abspath(directory)
+    else:
+        abs_directory = os.path.abspath(os.path.join(working_directory, directory))
+    
     if not abs_directory.startswith(abs_working_directory):
         raise ValueError("The specified directory is outside the working directory.")
     
